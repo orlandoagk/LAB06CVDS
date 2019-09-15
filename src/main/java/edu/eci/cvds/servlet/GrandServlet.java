@@ -43,7 +43,28 @@ public class GrandServlet extends HttpServlet {
 			 resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 		 }
 
+	 }
+	 @Override
+	 protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		 Writer responseWriter = resp.getWriter();
 
+		 try {
+			 String id = req.getParameter("id");
+			 Todo todo = Service.getTodo(Integer.parseInt(id));
+			 List<Todo> todoList = Arrays.asList(todo);
+			 resp.setStatus(HttpServletResponse.SC_OK);
+			 responseWriter.write(Service.todosToHTMLTable(todoList));
+			 responseWriter.flush();
+		 } catch (FileNotFoundException e){
+			 resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+		 } catch (NumberFormatException e) {
+			 resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+		 } catch (MalformedURLException e) {
+			 resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+		 } catch (Exception e) {
+			 resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+		 }
 
 	 }
+	 
 }
