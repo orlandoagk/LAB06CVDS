@@ -22,7 +22,9 @@ import edu.eci.cvds.servlet.model.Todo;
 	    urlPatterns = "/grandServlet"
 	)
 public class GrandServlet extends HttpServlet {
-	 @Override
+
+	private static final long serialVersionUID = 1L;
+	@Override
 	 protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		 Writer responseWriter = resp.getWriter();
 
