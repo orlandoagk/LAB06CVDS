@@ -1,26 +1,29 @@
 package edu.eci.cvds.servlet.model;
 
+import java.util.ArrayList;
+
 import javax.faces.bean.*;
+
 
 @ManagedBean(name = "User")
 @ApplicationScoped
 public class User {
 	private int randomNumber,intentosRealizados,premioAcum,intento;
-	
-	public int getIntento() {
-		return intento;
-	}
-	public void setIntento(int intento) {
-		this.intento = intento;
-	}
-
+	private String arregloIntentosRealizados;
 	private String hayGanador;
 	public User() {
 		randomNumber = (int) (Math.random()*50+1);
 		intentosRealizados = 0;
 		premioAcum = 0;
 		hayGanador = "No";
+		arregloIntentosRealizados = "";
 	
+	}
+	public int getIntento() {
+		return intento;
+	}
+	public void setIntento(int intento) {
+		this.intento = intento;
 	}
 	public int getRandomNumber() {
 		return randomNumber;
@@ -47,14 +50,22 @@ public class User {
 	public void setIntentosRealizados(int intentosRealizados) {
 		this.intentosRealizados = intentosRealizados;
 	}
-	public void guess() {
-		if (intento == randomNumber) {
-			this.setPremioAcum(premioAcum+100000);
-		}else {
-			this.setPremioAcum(premioAcum-10000);
+	public void guess(int intento) {
+		if (!arregloIntentosRealizados.contains(Integer.toString(intento))){
+			if (intento == randomNumber) {
+				this.setPremioAcum(premioAcum+100000);
+				hayGanador="Si";
+				resetGano();
+			}else {
+				this.setPremioAcum(premioAcum-10000);
+			}
+			if (intentosRealizados == 0) {
+				arregloIntentosRealizados = Integer.toString(intento);
+			}else {
+				arregloIntentosRealizados= arregloIntentosRealizados+ ","+Integer.toString(intento);
+			}
+			intentosRealizados++;
 		}
-		intentosRealizados++;
-		
 	}
 	
 	public void restart() {
@@ -63,6 +74,15 @@ public class User {
 		this.premioAcum=0;
 		this.hayGanador="No";
 		this.intento=0;
+		arregloIntentosRealizados = "";
 	}
+	public void resetGano() {
+		randomNumber = (int) (Math.random()*50+1);
+	}
+	public String getArregloIntentosRealizados() {
+		return arregloIntentosRealizados;
+	}
+	
+	
 	
 }

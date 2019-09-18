@@ -6,12 +6,13 @@ xmlns:p="http://primefaces.org/ui">
  	<h:body>
 		<h:form id="guess_form">
 			<p:panelGrid columns = "1">
-			<p:outputLabel style="display:none;" value="#{User.randomNumber}"> </p:outputLabel>
- 			<p:inputText id="intento" value="#{User.intento}"></p:inputText>
+			<p:outputLabel  value="#{User.randomNumber}"> </p:outputLabel>
+ 			<p:inputText id="intento" binding="#{intento}"></p:inputText>
  			<p:outputLabel value="#{User.intentosRealizados}"></p:outputLabel>
  			<p:outputLabel value="#{User.hayGanador}"></p:outputLabel>
  			<p:outputLabel value="#{User.premioAcum}"></p:outputLabel>
- 			<p:commandButton update="guess_form" actionListener="#{User.guess}" value="Jugar"></p:commandButton>
+ 			<p:outputLabel value="#{User.arregloIntentosRealizados}"></p:outputLabel>
+ 			<p:commandButton update="guess_form" actionListener="#{User.guess(intento.value)}" value="Jugar"></p:commandButton>
  			<p:commandButton update="guess_form" actionListener="#{User.restart}" value="Reiniciar"></p:commandButton>
  			</p:panelGrid>
  		</h:form>
