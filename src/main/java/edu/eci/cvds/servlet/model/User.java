@@ -63,7 +63,7 @@ public class User {
 		} catch (guessException e) {
 			if (e.getMessage().equals(guessException.YA_GANO)) {
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, 
-						"Coronaste!", "Ganaste un total de $"+Integer.toString(premioAcum)+ "y atinaste "+Integer.toString(ronda-1)+" veces el número"));
+						"Coronaste!", "Ganaste un total de $"+Integer.toString(premioAcum)+ " y atinaste "+Integer.toString(ronda-1)+" veces el número"));
 				restart();
 			} else {
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Suerte en la proxima!", "Perdiste, vamos a reiniciar el juego pa que intentes de nuevo!"));
