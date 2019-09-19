@@ -8,14 +8,18 @@ xmlns:p="http://primefaces.org/ui">
 			<p:panelGrid columns = "1">
 			<p:outputLabel  value="#{User.randomNumber}"> </p:outputLabel>
  			<p:inputText id="intento" binding="#{intento}"></p:inputText>
- 			<p:outputLabel value="#{User.intentosRealizados}"></p:outputLabel>
+ 			<p:outputLabel value="Número de Intentos: #{User.intentosRealizados}"></p:outputLabel>
  			<p:outputLabel value="#{User.hayGanador}"></p:outputLabel>
- 			<p:outputLabel value="#{User.premioAcum}"></p:outputLabel>
- 			<p:outputLabel value="#{User.arregloIntentosRealizados}"></p:outputLabel>
+ 			<p:outputLabel value="PremioActual: #{User.premioAcum}"></p:outputLabel>
+ 			<p:outputLabel value="Intentos Realizados: #{User.arregloIntentosRealizados}"></p:outputLabel>
+ 			
  			<p:commandButton update="guess_form" actionListener="#{User.guess(intento.value)}" value="Jugar"></p:commandButton>
  			<p:commandButton update="guess_form" actionListener="#{User.restart}" value="Reiniciar"></p:commandButton>
  			</p:panelGrid>
+ 			<p:messages id="mensaje" showDetail="true" autoUpdate="true" 
+closable="true" globalOnly="true"/>
  		</h:form>
+ 		
  		
  	</h:body>
 </html>

@@ -2,20 +2,23 @@ package edu.eci.cvds.servlet.model;
 
 import java.util.ArrayList;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.*;
+import javax.faces.context.FacesContext;
 
 
 @ManagedBean(name = "User")
 @ApplicationScoped
 public class User {
-	private int randomNumber,intentosRealizados,premioAcum,intento;
+	private int randomNumber,intentosRealizados,premioAcum,intento,ronda;
 	private String arregloIntentosRealizados;
 	private String hayGanador;
 	public User() {
 		randomNumber = (int) (Math.random()*50+1);
 		intentosRealizados = 0;
 		premioAcum = 0;
-		hayGanador = "No";
+		ronda = 1;
+		hayGanador = "Ronda 1";
 		arregloIntentosRealizados = "";
 	
 	}
@@ -50,21 +53,59 @@ public class User {
 	public void setIntentosRealizados(int intentosRealizados) {
 		this.intentosRealizados = intentosRealizados;
 	}
+	public void guess(String texto) {
+		try {
+			int intento = Integer.parseInt(texto);
+			this.guess(intento);
+			cambioEstado();
+		}catch(NumberFormatException e) {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "No puedes colocar texto o dejar vacio, tienes que colocar un número!"));
+		} catch (guessException e) {
+			if (e.getMessage().equals(guessException.YA_GANO)) {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, 
+						"Coronaste!", "Ganaste un total de $"+Integer.toString(premioAcum)+ "y atinaste "+Integer.toString(ronda-1)+" veces el número"));
+				restart();
+			} else {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Suerte en la proxima!", "Perdiste, vamos a reiniciar el juego pa que intentes de nuevo!"));
+				restart();
+			}
+		}
+	}
+	private void cambioEstado() throws guessException {
+		if (premioAcum >= 400000) {
+			throw new guessException(guessException.YA_GANO);
+		} else if (intentosRealizados == 10) {
+			throw new guessException(guessException.YA_PERDIO);
+		}
+	}
 	public void guess(int intento) {
-		if (!arregloIntentosRealizados.contains(Integer.toString(intento))){
+		boolean puedesAvanzar = true;
+		if (intento <= 0 || intento > 50) {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Tiene que ser un número entre 1 y 50!"));
+			puedesAvanzar = false;
+		}
+		String[] temporal = arregloIntentosRealizados.split(",");
+		for (int i = 0; i<temporal.length;i++) {
+			if (temporal[i].equals(Integer.toString(intento))) {
+				puedesAvanzar = false;
+			}
+		}
+		if (puedesAvanzar){
 			if (intento == randomNumber) {
 				this.setPremioAcum(premioAcum+100000);
-				hayGanador="Si";
 				resetGano();
+				ronda++;
+				hayGanador="Ronda "+Integer.toString(ronda);
 			}else {
 				this.setPremioAcum(premioAcum-10000);
+				if (intentosRealizados == 0) {
+					arregloIntentosRealizados = Integer.toString(intento);
+				}else {
+					arregloIntentosRealizados= arregloIntentosRealizados+ ","+Integer.toString(intento);
+				}
+				intentosRealizados++;
 			}
-			if (intentosRealizados == 0) {
-				arregloIntentosRealizados = Integer.toString(intento);
-			}else {
-				arregloIntentosRealizados= arregloIntentosRealizados+ ","+Integer.toString(intento);
-			}
-			intentosRealizados++;
+			
 		}
 	}
 	
@@ -72,12 +113,15 @@ public class User {
 		randomNumber = (int) (Math.random()*50+1);
 		this.intentosRealizados=0;
 		this.premioAcum=0;
-		this.hayGanador="No";
+		this.hayGanador="Ronda 1";
 		this.intento=0;
 		arregloIntentosRealizados = "";
+		this.ronda = 0;
 	}
 	public void resetGano() {
 		randomNumber = (int) (Math.random()*50+1);
+		arregloIntentosRealizados = "";
+		intentosRealizados = 0;
 	}
 	public String getArregloIntentosRealizados() {
 		return arregloIntentosRealizados;
