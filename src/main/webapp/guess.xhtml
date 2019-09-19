@@ -6,7 +6,7 @@ xmlns:p="http://primefaces.org/ui">
  	<h:body>
 		<h:form id="guess_form">
 			<p:panelGrid columns = "1">
-			<p:outputLabel  value="#{User.randomNumber}"> </p:outputLabel>
+			<p:outputLabel value="#{User.randomNumber}"> </p:outputLabel>
  			<p:inputText id="intento" binding="#{intento}"></p:inputText>
  			<p:outputLabel value="Número de Intentos: #{User.intentosRealizados}"></p:outputLabel>
  			<p:outputLabel value="#{User.hayGanador}"></p:outputLabel>
@@ -20,6 +20,6 @@ xmlns:p="http://primefaces.org/ui">
 closable="true" globalOnly="true"/>
  		</h:form>
  		
- 		
+ 	<script>alert("INSTRUCCIONES: Debes adivinar un número entre 1 y 50, ganas con $400.000 o más, pierdes si llegas a los 10 intentos, cada que atines un número se reinician los intentos y cambias de ronda");</script> 
  	</h:body>
 </html>

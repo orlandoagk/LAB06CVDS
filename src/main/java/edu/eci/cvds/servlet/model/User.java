@@ -1,7 +1,5 @@
 package edu.eci.cvds.servlet.model;
 
-import java.util.ArrayList;
-
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.*;
 import javax.faces.context.FacesContext;
@@ -50,16 +48,18 @@ public class User {
 	public int getPremioAcum() {
 		return premioAcum;
 	}
+	
 	public void setIntentosRealizados(int intentosRealizados) {
 		this.intentosRealizados = intentosRealizados;
 	}
+	
 	public void guess(String texto) {
 		try {
 			int intento = Integer.parseInt(texto);
 			this.guess(intento);
 			cambioEstado();
 		}catch(NumberFormatException e) {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "No puedes colocar texto o dejar vacio, tienes que colocar un número!"));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "No puedes colocar texto, dejar vacio o colocar decimales, tienes que colocar un número entero!"));
 		} catch (guessException e) {
 			if (e.getMessage().equals(guessException.YA_GANO)) {
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, 
@@ -71,6 +71,7 @@ public class User {
 			}
 		}
 	}
+	
 	private void cambioEstado() throws guessException {
 		if (premioAcum >= 400000) {
 			throw new guessException(guessException.YA_GANO);
@@ -78,6 +79,7 @@ public class User {
 			throw new guessException(guessException.YA_PERDIO);
 		}
 	}
+	
 	public void guess(int intento) {
 		boolean puedesAvanzar = true;
 		if (intento <= 0 || intento > 50) {
@@ -93,9 +95,10 @@ public class User {
 		if (puedesAvanzar){
 			if (intento == randomNumber) {
 				this.setPremioAcum(premioAcum+100000);
-				resetGano();
 				ronda++;
 				hayGanador="Ronda "+Integer.toString(ronda);
+				resetGano();
+				
 			}else {
 				this.setPremioAcum(premioAcum-10000);
 				if (intentosRealizados == 0) {
@@ -118,11 +121,13 @@ public class User {
 		arregloIntentosRealizados = "";
 		this.ronda = 0;
 	}
+	
 	public void resetGano() {
 		randomNumber = (int) (Math.random()*50+1);
 		arregloIntentosRealizados = "";
 		intentosRealizados = 0;
 	}
+	
 	public String getArregloIntentosRealizados() {
 		return arregloIntentosRealizados;
 	}
