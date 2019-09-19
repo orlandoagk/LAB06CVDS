@@ -6,7 +6,7 @@ xmlns:p="http://primefaces.org/ui">
  	<h:body>
 		<h:form id="guess_form">
 			<p:panelGrid columns = "1">
-			<p:outputLabel value="#{User.randomNumber}"> </p:outputLabel>
+			<p:outputLabel style="display:None;" value="#{User.randomNumber}"> </p:outputLabel>
  			<p:inputText id="intento" binding="#{intento}"></p:inputText>
  			<p:outputLabel value="Número de Intentos: #{User.intentosRealizados}"></p:outputLabel>
  			<p:outputLabel value="#{User.hayGanador}"></p:outputLabel>
