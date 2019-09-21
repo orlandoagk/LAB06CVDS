@@ -2,16 +2,19 @@
 <html xmlns="http://www.w3c.org/1999/xhtml"
 xmlns:h="http://xmlns.jcp.org/jsf/html"
 xmlns:p="http://primefaces.org/ui">
- <h:head></h:head>
+	 <h:head>
+	 	
+	 </h:head>
+ 	<link rel="stylesheet" type="text/css" href="estilo.css"> </link>
  	<h:body>
-		<h:form id="guess_form">
-			<p:panelGrid columns = "1">
-			<p:outputLabel style="display:None;" value="#{User.randomNumber}"> </p:outputLabel>
+		<h:form id="guess_form" >
+			<p:panelGrid id="tabla" columns = "1" class="panel">
+			<p:outputLabel id="numeroRandom" style="display:none;" value="#{User.randomNumber}"> </p:outputLabel>
  			<p:inputText id="intento" binding="#{intento}"></p:inputText>
- 			<p:outputLabel value="Número de Intentos: #{User.intentosRealizados}"></p:outputLabel>
- 			<p:outputLabel value="#{User.hayGanador}"></p:outputLabel>
- 			<p:outputLabel value="PremioActual: #{User.premioAcum}"></p:outputLabel>
- 			<p:outputLabel value="Intentos Realizados: #{User.arregloIntentosRealizados}"></p:outputLabel>
+ 			<p:outputLabel class="label" value="Número de Intentos: #{User.intentosRealizados}"></p:outputLabel>
+ 			<p:outputLabel class="label" value="#{User.hayGanador}"></p:outputLabel>
+ 			<p:outputLabel class="label" value="PremioActual: #{User.premioAcum}"></p:outputLabel>
+ 			<p:outputLabel class="label" value="Intentos Realizados: #{User.arregloIntentosRealizados}"></p:outputLabel>
  			
  			<p:commandButton update="guess_form" actionListener="#{User.guess(intento.value)}" value="Jugar"></p:commandButton>
  			<p:commandButton update="guess_form" actionListener="#{User.restart}" value="Reiniciar"></p:commandButton>
@@ -19,7 +22,6 @@ xmlns:p="http://primefaces.org/ui">
  			<p:messages id="mensaje" showDetail="true" autoUpdate="true" 
 closable="true" globalOnly="true"/>
  		</h:form>
- 		
  	<script>alert("INSTRUCCIONES: Debes adivinar un número entre 1 y 50, ganas con $400.000 o más, pierdes si llegas a los 10 intentos, cada que atines un número se reinician los intentos y cambias de ronda");</script> 
  	</h:body>
 </html>
