@@ -1,0 +1,30 @@
+Introducción
+
+Debe utilizar doGet() cuando desee interceptar en HTTP GET requests. Debe utilizar doPost() cuando desea interceptar en HTTP POST requests. Eso es todo. No conecte el uno al otro o viceversa (como en el desafortunado proceso autodirigido ProcessRequest () de Netbeans). Esto no tiene ningún sentido.
+
+OBTENER
+
+Por lo general, las solicitudes HTTP GET son idempotent. Es decir, obtiene exactamente el mismo resultado cada vez que ejecuta la solicitud (dejando la autorización / autenticación y la naturaleza sensible al tiempo de la página (resultados de búsqueda, últimas noticias, etc.) fuera de consideración). Podemos hablar de una solicitud marcable. Al hacer clic en un enlace, hacer clic en un marcador, ingresar la URL sin formato en la barra de direcciones del navegador, etcétera, se activará una solicitud HTTP GET. Si un Servlet está escuchando en la URL en cuestión, se llamará a su método doGet (). Por lo general, se utiliza para preprocesar una solicitud. Es decir. hacer algunas cosas de negocios antes de presentar el resultado HTML de un JSP, como recopilar datos para mostrar en una tabla.
+
+ENVIAR
+
+Las solicitudes HTTP POST no son idempotentes. Si el usuario final ha enviado un formulario POST en una URL de antemano, que no ha realizado una redirección, entonces la URL no es necesariamente marcable. Los datos del formulario enviado no se reflejan en la URL. Copipasting de la URL en una nueva ventana / pestaña del navegador no necesariamente produce exactamente el mismo resultado que después del envío del formulario. Tal URL entonces no se puede marcar. Si un Servlet está escuchando en la URL en cuestión, se llamará a su doPost (). Normalmente se utiliza para postprocesar una solicitud. Es decir. recopilar datos de un formulario HTML enviado y hacer algunas cosas de negocios con él (conversión, validación, guardado en DB, etc.). Finalmente, generalmente el resultado se presenta como HTML desde la página JSP reenviada.
+
+PUT
+
+Utilizado normalmente para actualizar contenidos, pero también pueden crearlos. Tampoco muestra ninguna información en la URL. En caso de éxito devuelve 201 (created, en caso de que la acción haya creado un elemento) o 204 (no response, si el servidor no devuelve ningún contenido). A diferencia de POST es idempotente, si se crea o edita un resource con PUT y se hace el mismo request otra vez, el resource todavía está ahí y mantiene el mismo estado que en la primera llamada. Si con una llamada PUT se cambia aunque sea sólo un contador en el resource, la llamada ya no es idempotente, ya que se cambian contenidos.
+
+DELETE
+
+Simplemente elimina un resource identificado en la URI. Si se elimina correctamente devuelve 200 junto con un body response, o 204 sin body. DELETE, al igual que PUT y GET, también es idempotente.
+
+HEAD
+
+Es idéntido a GET, pero el servidor no devuelve el contenido en el HTTP response. Cuando se envía un HEAD request, significa que sólo se está interesado en el código de respuesta y los headers HTTP, no en el propio documento. Con este método el navegador puede comprobar si un documento se ha modificado, por razones de caching. Puede comprobar también directamente si el archivo existe.
+
+Por ejemplo, si tienes muchos enlaces en tu sitio web, puedes enviar un HEAD request a todos los enlaces para comprobar los que estén rotos. Es bastante más rápido que hacerlo con GET.
+
+
+Referencias :
+https://codeday.me/es/qa/20181209/30772.html
+https://diego.com.es/metodos-http
