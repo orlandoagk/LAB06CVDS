@@ -3,8 +3,4 @@
   -Johan Arias 
   -Orlando Gelves
   
-#Respuestas parte III#
-    -20 Cuando cambiamos el metodo post por get, lo que permitimos es que el usuario vea todo el formulario por el URL lo que le resta seguridad
-    a nuestra pagina web, lo cual no es lo que se busca.
-    -21 Lo que esta haciendo la clase Service.java es crear una tabla con todos los valores que tiene un objeto Todo, lo cual es necesario ya 
-    que las paginas web se pueden ver gracias a HTML ya que es la forma como guardamos los datos en una pagina.
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/d7da28793e0f49eeba0a2d5570c1238b)](https://www.codacy.com/manual/orlandoagk/LAB06CVDS?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=orlandoagk/LAB06CVDS&amp;utm_campaign=Badge_Grade)
