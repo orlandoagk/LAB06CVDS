@@ -4,3 +4,5 @@
   -Orlando Gelves
   
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/d7da28793e0f49eeba0a2d5570c1238b)](https://www.codacy.com/manual/orlandoagk/LAB06CVDS?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=orlandoagk/LAB06CVDS&amp;utm_campaign=Badge_Grade)
+
+[![CircleCI](https://circleci.com/gh/orlandoagk/LAB06CVDS.svg?style=svg)](https://circleci.com/gh/orlandoagk/LAB06CVDS)
